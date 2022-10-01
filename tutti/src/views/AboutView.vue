@@ -1,15 +1,18 @@
 <template>
+  <MainHeader/>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div class="container justify-content-center">
+      <div class="row">
+        <div class="col">
+          <ProfileHeader/>
+        </div>
+      </div>  
+    </div>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script setup>
+import ProfileHeader from '../components/ProfileHeader.vue';
+import MainHeader from '../components/MainHeader.vue'
+
+</script>
