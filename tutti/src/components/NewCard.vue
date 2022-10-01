@@ -40,9 +40,8 @@
             <div class="col-8 p-0">
               <!-- Like --><!-- Will need to change state based on firestore data -->
               <button class="bi bi-heart post-icon pr-2"></button>
-              <!-- &lt;router-link to=&quot;/about&quot; class=&quot;bi bi-chat-left-heart-fill post-icon pl-2 pr-2&quot;&gt;&lt;/router-link&gt; -->
               <!-- Comment -->
-              <button type="button" class="bi bi-chat-left-heart-fill post-icon pl-2 pr-2" data-toggle="modal" data-target="#commentModal"></button>
+              <!-- <button type="button" class="bi bi-chat-left-heart-fill post-icon pl-2 pr-2" data-toggle="modal" data-target="#commentModal"></button> -->
             </div>
             <div class="col-4 p-0 d-flex justify-content-end"><!-- Share --><button type="button" class="bi bi-share-fill post-icon pl-2 pr-2" data-toggle="modal" data-target="#exampleModalCenter"></button>
             </div>

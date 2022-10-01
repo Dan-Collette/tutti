@@ -48,7 +48,7 @@
             <p> Short Bio Lorem ipsum dolor sit amet consectetur, adipisicing elit. <!-- Dynamic --></p>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-block mb-4">Edit Profile</button>
+            <button class="btn btn-block btn-primary mb-4">Edit Profile</button>
           </div>
         </div>
       </div>

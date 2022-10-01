@@ -1,8 +1,10 @@
 <script setup>
 import NewCard from "../components/NewCard.vue";
+import MainHeader from "../components/MainHeader.vue";
 </script>
 
 <template>
+  <MainHeader/>
   <div class="feed">
     <div class="container">
       <div class="row">

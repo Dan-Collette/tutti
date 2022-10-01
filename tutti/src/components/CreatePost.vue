@@ -39,22 +39,50 @@
         <!-- Write A Caption -->
         <form>
           <div class="form-group row align-items-center">
-            <label for="postCaption">Create Caption</label><!-- Dynamic -->
-            <!-- Content from preview and textarea will be sent to firestore -->
-            <textarea class="form-control" id="postCaption" rows="3" placeholder="Write Caption Here..."></textarea>
+            <label for="postCaption" class="col-sm-9 col-md-9 col-lg-9">Create Caption</label><!-- Dynamic -->
+            <div class="col-sm-9 col-md-9 col-lg-8">
+              <!-- Content from preview and textarea will be sent to firestore -->
+              <textarea class="form-control" id="postCaption" rows="3" placeholder="Write Caption Here..." v-model="new_post.caption"></textarea>
+            </div>
           </div>
         </form>
         <div class="row flex-row pt-2 justify-content-between">
-          <div class="col-sm-5 align-items-lef p-0 pt-2 pb-2">
+          <div class="col-sm-5 align-items-lef pt-2 pb-2">
             <a href="#/" class="btn btn-block btn-secondary">Cancel</a>
           </div>
-          <div class="col-sm-5 p-0 pt-2 pb-2">
-            <button class="btn btn-block btn-primary">Post Now</button>
+          <div class="col-sm-5 pt-2 pb-2">
+            <button @click="newPost()" class="btn btn-block btn-primary">Post Now</button>
             <!-- Submit post to firestore -->
           </div>
         </div>
       </div>
 </template>
+
+<script>
+  export default {
+    data() {
+      return {
+        new_post: {
+          caption: "",
+        }
+      }
+    },
+    methods: {
+        newPost: function() {
+          db.collection("posts")
+          .add({
+            caption: this.new_post.caption,
+          })
+          .then(() => {
+          console.log("Document successfully written!");
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
+        }
+      },
+  }
+</script>
 
 <style>
   .cover {
