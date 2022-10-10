@@ -1,26 +1,27 @@
 <template>
 <div class="container d-flex justify-content-center">
   <div class="row flex-colunm justify-content-center">
-    <div class="col-lg-8"><div class="card mt-5" >
+    <div class="col-lg-8"><div class="card" >
       <div class="card-body">
         <div class="container d-flex flex-column">
           <div class="row">
             <!-- Album Cover -->
-            <div class="col-sm-4 col-md-3 p-0 m-0">
+            <div class="col-sm-5 col-md-4 p-0">
               <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
               <!-- &lt;img :src=&quot;image&quot; class=&quot;cover&quot; alt=&quot;Album Cover&quot;&gt; -->
               <!-- <img src="/img/JimmyTest.9c3cfbc1.jpeg" class="cover img-responsive center-block d-block" alt="Album Cover" data-v-040ef000=""> -->
+              <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover">
             </div>
             <!-- Song Info -->
-            <div class="col-sm-8 col-md-8 p-0 pt-3 pt-sm-0">
+            <div class="col-sm-7 col-md-8 p-0 pt-3 pt-sm-0">
               <div class="row flex-column">
                 <div class="col-12">
-                  <p class="text-center">Web playback buttons</p>
+                  <p class="text-center secondary-text-color">Web playback buttons</p>
                 </div>
                 <div class="col-12">
                   <h5>Song Title Goes Here</h5>
                   <!-- Dynamic -->
-                  <h6>Artist Name</h6>
+                  <h6 class="secondary-text-color">Artist Name</h6>
                   <!-- Dynamic -->
                 </div>
               </div>
@@ -31,7 +32,7 @@
             <div class="col-12">
               <div class="row flex-row pb-3">
                 <div class="pfp-img align-self-center"></div>
-                <h6 class="card-titled m-0 align-self-center pl-2">Username</h6>
+                <h6 class="card-title m-0 align-self-center pl-2">Username</h6>
                 <!-- Dynamic -->
                 <!-- Dynamic -->
                 <p class="card-text pt-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -58,14 +59,53 @@
 
 </script>
 
-<style>
+<style scoped>
 .card {
-  background-color: grey;
+  border: none;
+  border-bottom: 1px solid #2D2D2D;
+  background-color: #FFFFFF00;
+  border-radius: 0px;
+}
+.cover {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  border-radius: 7.5px;
 }
 .pfp-img {
-  background-color: rgb(236, 47, 236);
+  background-color: green;
   height: 25px;
   width: 25px;
   border-radius: 50px;
+}
+.card-title {
+  font-family: proxima-nova, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+p {
+  color: #FFFFFF;
+}
+.secondary-text-color {
+  color: #E1E1E1;
+}
+.post-icon {
+  background-color: #FFFFFF00;
+  border: none;
+  font-size: 22px;
+  color: #FFFFFF;
+}
+@media (min-width: 576px) {
+  .cover {
+    width: 150px;
+    height: 150px;
+    margin: 0.1px;
+  }
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 992px) {
+}
+@media (min-width: 1200px) {
 }
 </style>

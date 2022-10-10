@@ -1,8 +1,8 @@
 <template>
   <MainHeader/>
   <div class="about">
-    <div class="container justify-content-center">
-      <div class="row">
+    <div class="container-fluid justify-content-center p-0">
+      <div class="row no-gutters">
         <div class="col">
           <ProfileHeader/>
         </div>

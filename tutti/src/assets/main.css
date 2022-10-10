@@ -8,17 +8,28 @@
   font-weight: normal;
 } */
 
-a,
+/* a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
+} */
+h1, h2, h3, h4, h5 {
+  font-family: futura-pt-bold, sans-serif;
+font-weight: 700;
+font-style: normal;
+color: #FFFFFF;
 }
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+h6 {
+  font-family: futura-pt,sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color: #FFFFFF;
+}
+p {
+  font-family: proxima-nova, sans-serif;
+font-weight: 400;
+font-style: normal;
 }
 
 @media (min-width: 1024px) {

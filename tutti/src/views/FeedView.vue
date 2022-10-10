@@ -23,11 +23,6 @@ import MainHeader from "../components/MainHeader.vue";
     margin: 0;
     width: 100%;
     height: 100%;
-    /* background-image: url('../assets/images/background.png');
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center; */
   }
 </style>
 

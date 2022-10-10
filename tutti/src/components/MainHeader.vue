@@ -1,6 +1,12 @@
 <template>
   <header>
-    <h1>Tutti</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img class="main-logo" src="../assets/images/tutti.png" alt="Tutti Logo"/>
+        </div>
+      </div>  
+    </div>
   </header>
 </template>
 
@@ -10,7 +16,7 @@
 
 <style>
   header {
-    background-color: /* #063851 */ grey;
+    background-color: #1D1D1D;
     padding: 16px;
     width: 100%;
     position: sticky; 
@@ -20,5 +26,21 @@
 h1 {
     color: #f2f2f2;
     font-size: 25px;
+}
+.main-logo {
+  width: auto;
+  height: 25px;
+}
+@media (min-width: 576px) {
+  .main-logo {
+    width: auto;
+    height: 35px;
+  }
+}
+@media (min-width: 768px) {
+}
+@media (min-width: 992px) {
+}
+@media (min-width: 1200px) {
 }
 </style>
