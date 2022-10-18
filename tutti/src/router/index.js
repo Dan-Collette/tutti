@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginFlow from "../views/LoginFlow.vue";
 import FeedView from "../views/FeedView.vue";
 import NewPost from "../views/NewPostView.vue";
+import "../spotify.js"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
   ],
+});
+
+router.afterEach((to, from, next) => {
+  console.log(to)
+  next()
 });
 
 export default router;
