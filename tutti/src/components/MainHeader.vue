@@ -2,7 +2,7 @@
   <header>
     <div class="container">
       <div class="row">
-        <div class="col">
+        <div class="col p-0 pl-sm-3">
           <img class="main-logo" src="../assets/images/tutti.png" alt="Tutti Logo"/>
         </div>
       </div>  

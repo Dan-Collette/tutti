@@ -16,3 +16,11 @@ import CreatePost from '../components/CreatePost.vue';
 import MainHeader from '../components/MainHeader.vue';
 
 </script>
+
+<style>
+  .post {
+    width: 100%;
+    height: 100vh;
+    
+  }
+</style>

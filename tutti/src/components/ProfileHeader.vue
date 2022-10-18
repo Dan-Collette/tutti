@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-8 col-xl-8">
         <div class="row">
           <div class="col-8 align-middle my-auto">
-            <h6 class="mb-0">Username</h6>
+            <h5 class="mb-0">Username</h5>
             <!-- Dynamic -->
           </div>
           <div class="col-4 d-flex justify-content-end my-auto">
@@ -44,7 +44,7 @@
         </div>
         <div class="row pt-2">
           <div class="col-12">
-            <h6> Firstname Lastname <!-- Dynamic --></h6>
+            <h5> Firstname Lastname <!-- Dynamic --></h5>
             <p class="secondary-text-color"> Short Bio Lorem ipsum dolor sit amet consectetur, adipisicing elit. <!-- Dynamic --></p>
           </div>
           <div class="col-sm-6">
@@ -83,6 +83,9 @@
   .cta-btn {
     background-color: #CA0CF9;
     border: 1px solid #CA0CF9;
+    font-family: proxima-nova, sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
   @media (min-width: 576px) {
   }

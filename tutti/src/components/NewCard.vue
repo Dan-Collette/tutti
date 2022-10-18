@@ -1,62 +1,70 @@
 <template>
-<div class="container d-flex justify-content-center">
-  <div class="row flex-colunm justify-content-center">
-    <div class="col-lg-8"><div class="card" >
-      <div class="card-body">
-        <div class="container d-flex flex-column">
-          <div class="row">
-            <!-- Album Cover -->
-            <div class="col-sm-5 col-md-4 p-0">
-              <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
-              <!-- &lt;img :src=&quot;image&quot; class=&quot;cover&quot; alt=&quot;Album Cover&quot;&gt; -->
-              <!-- <img src="/img/JimmyTest.9c3cfbc1.jpeg" class="cover img-responsive center-block d-block" alt="Album Cover" data-v-040ef000=""> -->
-              <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover">
-            </div>
-            <!-- Song Info -->
-            <div class="col-sm-7 col-md-8 p-0 pt-3 pt-sm-0">
-              <div class="row flex-column">
-                <div class="col-12">
-                  <p class="text-center secondary-text-color">Web playback buttons</p>
-                </div>
-                <div class="col-12">
-                  <h5>Song Title Goes Here</h5>
-                  <!-- Dynamic -->
-                  <h6 class="secondary-text-color">Artist Name</h6>
-                  <!-- Dynamic -->
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-3">
-            <!-- Username and Caption -->
+  <div class="card">
+    <div class="card-body">
+    <div class="container d-flex flex-column">
+      <div class="row">
+        <!-- Album Cover -->
+        <div class="col-sm-5 col-md-4 p-0">
+          <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
+          <!-- &lt;img :src=&quot;image&quot; class=&quot;cover&quot; alt=&quot;Album Cover&quot;&gt; -->
+          <!-- <img src="/img/JimmyTest.9c3cfbc1.jpeg" class="cover img-responsive center-block d-block" alt="Album Cover" data-v-040ef000=""> -->
+          <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover">
+        </div>
+        <!-- Song Info -->
+        <div class="col-sm-7 col-md-8 p-0 pt-3 pt-sm-0">
+          <div class="row flex-column">
             <div class="col-12">
-              <div class="row flex-row pb-3">
-                <div class="pfp-img align-self-center"></div>
-                <h6 class="card-title m-0 align-self-center pl-2">Username</h6>
-                <!-- Dynamic -->
-                <!-- Dynamic -->
-                <p class="card-text pt-2">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
+              <p class="text-center secondary-text-color">Web playback buttons</p>
             </div>
-            <div class="col-8 p-0">
-              <!-- Like --><!-- Will need to change state based on firestore data -->
-              <button class="bi bi-heart post-icon pr-2"></button>
-              <!-- Comment -->
-              <!-- <button type="button" class="bi bi-chat-left-heart-fill post-icon pl-2 pr-2" data-toggle="modal" data-target="#commentModal"></button> -->
-            </div>
-            <div class="col-4 p-0 d-flex justify-content-end"><!-- Share --><button type="button" class="bi bi-share-fill post-icon pl-2 pr-2" data-toggle="modal" data-target="#exampleModalCenter"></button>
+            <div class="col-12">
+              <h5>{{ post.song }}</h5>
+              <!-- Dynamic -->
+              <h6 class="secondary-text-color">{{ post.album }} </h6>
+              <!-- Dynamic -->
+              <p class="secondary-text-color">{{ post.artist }} </p>
             </div>
           </div>
         </div>
       </div>
-    </div><!-- Comments Modal -->
+      <div class="row pt-3">
+        <!-- Username and Caption -->
+        <div class="col-12">
+          <div class="row flex-row">
+            <div class="pfp-img align-self-center"></div>
+            <h6 class="card-title m-0 align-self-center pl-2">{{ post.username }}</h6>
+          </div>
+          <div class="row pt-2 pb-3">
+            <p class="card-text pt-2">{{ post.caption }}<!-- Some quick example text to build on the card title and make up the bulk of the card's content --></p>
+          </div>
+        </div>
+        <div class="col-6 p-0">
+          <!-- Like --><!-- Will need to change state based on firestore data -->
+          <button class="bi bi-heart post-icon pr-2"><span>{{post.likesNum}}</span></button>
+          <!-- Share -->
+          <button type="button" class="bi bi-share-fill post-icon pl-2 pr-2"></button>
+        </div>
+        <div class="col-6 p-0 d-flex justify-content-end">
+          <p class="mb-0 pr-2 dt">{{post.createdDate}}</p>
+          <p class="mb-0 pl-2 dt">{{post.createdTime}}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
+  export default {
+    props: ['post'],
+    data() {
+      return {
 
+      }
+    },
+    methods: {
+
+      },
+  }
 </script>
 
 <style scoped>
@@ -71,6 +79,7 @@
   height: 150px;
   margin: 0 auto;
   border-radius: 7.5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .pfp-img {
   background-color: green;
@@ -94,6 +103,10 @@ p {
   border: none;
   font-size: 22px;
   color: #FFFFFF;
+}
+.dt {
+  font-size: 12px!important;
+  align-self: center;
 }
 @media (min-width: 576px) {
   .cover {

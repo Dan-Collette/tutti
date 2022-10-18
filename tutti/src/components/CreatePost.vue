@@ -18,19 +18,17 @@
           <!-- Album Cover -->
           <div class="col-sm-4 col-md-4 p-0 m-0">
             <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
-            <!-- &lt;img :src=&quot;image&quot; class=&quot;cover&quot; alt=&quot;Album Cover&quot;&gt; -->
-            <!-- <img src="/img/JimmyTest.9c3cfbc1.jpeg" class="cover img-responsive center-block d-block" alt="Album Cover" data-v-040ef000=""> -->
-            <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover"/>
+            <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover"/> <!-- {{postAlbumCover}} -->
           </div>
           <!-- Song Info -->
           <div class="col-sm-8 col-md-8 p-0 pt-3 pt-sm-0">
             <div class="row flex-column">
               <div class="col-12">
-                <h5>Song Title Goes Here</h5>
+                <h5>Song Title Goes Here</h5> <!-- {{postSong}} -->
                 <!-- Dynamic -->
-                <h6 class="secondary-text-color">Album Name</h6>
+                <h6 class="secondary-text-color">Album Name</h6> <!-- {{postAlbumTitle}} -->
                 <!-- Dynamic -->
-                <p class="secondary-text-color">Artist Name</p>
+                <p class="secondary-text-color">Artist Name</p> <!-- {{postArtist}} -->
                 <!-- Dynamic -->
               </div>
             </div>
@@ -49,7 +47,7 @@
         </form>
         <div class="row flex-row pt-2 justify-content-between">
           <div class="col-sm-5 align-items-lef pt-2 pb-2">
-            <a href="/feed" class="btn btn-block btn-secondary cancel-btn">Cancel <i class="bi bi-x-lg p-1"></i></a>
+            <a href="/feed" class="btn btn-block btn-secondary cancel-btn">Cancel<i class="bi bi-x-lg p-1"></i></a>
           </div>
           <div class="col-sm-5 pt-2 pb-2">
             <button @click="newPost()" class="btn btn-block btn-primary cta-btn">Post Now <i class="bi bi-arrow-right p-1"></i></button>
@@ -65,7 +63,12 @@
     data() {
       return {
         new_post: {
+          /* song: "Song Title",
+          album: "Album Title",
+          artist: "Artist Name",
+          username: "Username", */
           caption: "",
+          timestamp: new Date(),
         }
       }
     },
@@ -73,7 +76,19 @@
         newPost: function() {
           db.collection("posts")
           .add({
+            /* song: this.new_post.song,
+            album: this.new_post.album,
+            artist: this.new_post.artist,
+            username: this.new_post.username, */
+            song: "Song Title",
+          album: "Album Title",
+          artist: "Artist Name",
+          username: "Username",
             caption: this.new_post.caption,
+            timestamp: this.new_post.timestamp,
+            likes: [],
+            likesNum: 0,
+            postLiked: false,
           })
           .then(() => {
           console.log("Document successfully written!");
@@ -92,6 +107,7 @@
     height: 150px;
     margin: 0 auto;
     border-radius: 7.5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   label {
     font-family: futura-pt,sans-serif;
@@ -107,7 +123,8 @@
     border: 1px solid #CA0CF9;
   }
   .cancel-btn {
-    border: 1px solid white;
+    border: 1px solid #E1E1E1;
+    color: #E1E1E1;
     background-color: #FFFFFF00;
   }
   .secondary-text-color {
