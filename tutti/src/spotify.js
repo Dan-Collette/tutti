@@ -1,19 +1,18 @@
-import auth from 'spotify-personal-auth'
+import localforage from 'localforage'
 import SpotifyWebApi from 'spotify-web-api-node'
 
 
 
-// Configure auth module
-auth.config({
-    clientId: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
-    clientSecret: import.meta.env.VITE_SPOTIFY_CLIENT_SECRET, 
-    scope: [], // Replace with your array of needed Spotify scopes
-    // path: '/path/to/a/tokens.json' // Optional path to file to save tokens
-})
+let user = {
+    token: await localforage.getItem('token') || null,
+    isAuthenticated: function(){
+        return this.token !== null
+    }
+}
 
 const api = new SpotifyWebApi()
 
-export {api, auth}
+export {api, user}
 
 // /* Get token promise, the token will refresh if this is called when it has expired,
 //  * But you can get the refresh token if you would rather handle it
