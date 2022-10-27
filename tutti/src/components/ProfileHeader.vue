@@ -67,7 +67,9 @@ export default {
         user: false
       }
     },
-    mounted(){
+    async mounted(){
+      await api.init()
+      
       // http://michaelthelin.se/spotify-web-api-node/#getMe
       api.getMe().then(response =>{
         this.user = response.body

@@ -39,6 +39,7 @@
 <style scoped>
 /* Pulled from https://accounts.spotify.com/en/status */
 button {
+  border: none;
   background-color: #1ed760;
   color: black;
   min-width: 250px;
