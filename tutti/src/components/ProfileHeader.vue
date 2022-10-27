@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-8 col-xl-8">
         <div class="row">
           <div class="col-8 align-middle my-auto">
-            <h5 class="mb-0">Username</h5>
+            <h5 class="mb-0" v-if="user">{{ user?.id}}</h5>
             <!-- Dynamic -->
           </div>
           <div class="col-4 d-flex justify-content-end my-auto">
@@ -16,7 +16,8 @@
           <div class="col-md-2">
             <div class="row">
               <div class="col-12 pt-1 pb-2 pb-sm-4">
-                <div class="pfp-img m-auto m-0-sm">
+                <div class="pfp-img m-auto m-0-sm" v-if="user">
+                  <img :src="user?.images[0].url" alt="">
                 </div>
                 <!-- Dynamic -->
               </div>
@@ -44,7 +45,7 @@
         </div>
         <div class="row pt-2">
           <div class="col-12">
-            <h5> Firstname Lastname <!-- Dynamic --></h5>
+            <h5 v-if="user"> {{ user?.display_name}} <!-- Dynamic --></h5>
             <p class="secondary-text-color"> Short Bio Lorem ipsum dolor sit amet consectetur, adipisicing elit. <!-- Dynamic --></p>
           </div>
           <div class="col-sm-6">
@@ -58,11 +59,27 @@
 </template>
 
 <script>
+import { api, user } from "../spotify.js"
+export default {
+    name: 'ProfileHeader',
+    data() {
+      return {
+        user: false
+      }
+    },
+    mounted(){
+      // http://michaelthelin.se/spotify-web-api-node/#getMe
+      api.getMe().then(response =>{
+        this.user = response.body
+        console.log(response.body)
+      })
+    }
 
+  }
 </script>
 
-<style scoped> 
-  .secondary-text-color {
+<style scoped>
+.secondary-text-color {
     color: #E1E1E1;
   }
   .pf-header {
@@ -100,5 +117,10 @@
   }
   @media (min-width: 1200px) {
   }
-  
+
+  .pfp-img img {
+  width: 75px;
+  height: auto;
+  border-radius: 100%;
+  }
 </style>

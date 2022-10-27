@@ -9,14 +9,37 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/login",
       name: "login",
+      component: Login
+    },
+
+    // Logic for the oAuth callback from spotify
+    {
+      path: "/callback",
+      name: "callback",
       component: Login,
+      // Before we load this page, check to see if there's a token 
+      async beforeEnter(to, from) {
+        let url = new URL(window.location.href.replace("#", "?"));
+        
+        let token = url.searchParams.get('access_token') || false
+        let expires = url.searchParams.get('expires_in') || false
+
+        // If the user authenticated, they'll have a token
+        if(token){
+          await user.setToken(token)
+          await user.setExpires(expires)
+
+          return { to: 'home'}
+        }
+
+      },
     },
     {
-      path: "/login",
-      name: "login-explicit",
-      component: Login,
+      path: "/",
+      name: "home",
+      component: FeedView,
     },
     {
       path: "/feed",
@@ -40,7 +63,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if(to.name !== 'login' && !user.isAuthenticated()) next({ name: 'login'})
+  if(to.name !== 'login' && to.name !== 'callback' && !user.isAuthenticated()) next({ name: 'login'})
   else next()
 });
 

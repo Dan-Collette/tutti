@@ -1,16 +1,29 @@
 import localforage from 'localforage'
 import SpotifyWebApi from 'spotify-web-api-node'
 
-
-
 let user = {
-    token: await localforage.getItem('token') || null,
+    access_token: await localforage.getItem('access_token') || null,
+    token_type: await localforage.getItem('token_type') || null,
+    expires_in: await localforage.getItem('expires_in') || null,
+    state: await localforage.getItem('state') || null,
     isAuthenticated: function(){
-        return this.token !== null
-    }
+        return this.access_token !== null
+    },
+    setToken: async function(token){
+        this.access_token = token
+        return await localforage.setItem('access_token', token )
+    },
+    setExpires: async function (expires) {
+        this.expires_in = expires
+        return await localforage.setItem('expires_in', expires)
+    },
 }
 
 const api = new SpotifyWebApi()
+
+if(user.isAuthenticated()){
+    api.setAccessToken(user.access_token)
+}
 
 export {api, user}
 

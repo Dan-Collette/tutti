@@ -6,6 +6,7 @@
         <div class="row justify-content-center">
           <div class="col-12 col-md-10 col-lg-8">
             <h1>Please log in before proceeding.</h1>
+            <SpotifyButton></SpotifyButton>
           </div>
         </div>  
       </div>
@@ -14,10 +15,13 @@
 </template>
 <script>
 import MainHeader from '../components/MainHeader.vue'
+import SpotifyButton from '../components/SpotifyButton.vue';
+import { api, user } from "../spotify.js"
 
   export default {
     components: {
-      MainHeader
+      MainHeader,
+      SpotifyButton
     },
     data() {
       return {
