@@ -44,6 +44,7 @@ button {
   color: black;
   min-width: 250px;
   text-transform: uppercase;
+  text-align: center;
   letter-spacing: 2px;
   border-radius: 500px;
   font-size: 0.875rem;
@@ -55,6 +56,7 @@ button {
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
+  margin: 0 auto;
 }
 
 button:hover {

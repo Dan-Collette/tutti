@@ -17,6 +17,7 @@ import MainHeader from "../components/MainHeader.vue";
     </div>
   </div>
 </template>
+
 <script>
   export default {
     data() {
@@ -34,6 +35,7 @@ import MainHeader from "../components/MainHeader.vue";
               song: doc.data().song,
               album: doc.data().album,
               artist: doc.data().artist,
+              userPic: doc.data().userPic,
               username: doc.data().username,
               caption: doc.data().caption,
               timestamp: doc.data().timestamp,

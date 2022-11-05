@@ -30,7 +30,14 @@
         <!-- Username and Caption -->
         <div class="col-12">
           <div class="row flex-row">
-            <div class="pfp-img align-self-center"></div>
+           <!--  <div class="pfp-img align-self-center m-auto m-0-sm">
+              <img class="spotify-img" :src="post.profilePic" alt="User Profile Image">
+            </div> -->
+            <div class="pfp-img align-self-center">
+            <img class="spotify-img" alt="User Profile Image"
+            :src="post.userPic"
+            > 
+            </div>
             <h6 class="card-title m-0 align-self-center pl-2">{{ post.username }}</h6>
           </div>
           <div class="row pt-2 pb-3">
@@ -58,12 +65,10 @@
     props: ['post'],
     data() {
       return {
-
       }
     },
     methods: {
-
-      },
+    },
   }
 </script>
 
@@ -82,10 +87,14 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .pfp-img {
-  background-color: green;
   height: 25px;
   width: 25px;
-  border-radius: 50px;
+}
+.spotify-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 .card-title {
   font-family: proxima-nova, sans-serif;

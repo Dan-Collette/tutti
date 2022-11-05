@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+import { api, user } from "../spotify.js"
   export default {
     data() {
       return {
@@ -21,28 +22,30 @@
       }
     },
     methods: {
-      getPosts: function () {
-        db.collection("posts").orderBy("timestamp", "desc").onSnapshot((quearySnapshot) => {
-          this.posts = [];
-          quearySnapshot.forEach((doc) => {
+      getUserPosts: function() {
+        /* need to get posts by user?.id  */
+        db.collection("posts").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
+            this.posts = []
+            querySnapshot.forEach((doc) =>
             this.posts.push({
               id: doc.id,
               song: doc.data().song,
               album: doc.data().album,
               artist: doc.data().artist,
               username: doc.data().username,
+              userPic: doc.data().userPic,
               caption: doc.data().caption,
               timestamp: doc.data().timestamp,
               createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
               likes: doc.data().likes,
-            })
-          })
+            }))
         })
-      }
+      },
     },
     mounted(){
-      this.getPosts();
+      this.getUserPosts();
+      /* this.getPosts(); */
         // firebase get posts
         // ....
 

@@ -2,10 +2,10 @@
   <div>
   <MainHeader/>
     <div class="login">
-      <div class="container pb-5">
+      <div class="container d-flex justify-content-center">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-10 col-lg-8">
-            <h1>Please log in before proceeding.</h1>
+          <div class="col-12">
+            <h1 class="pb-3 text-center">Please log in before proceeding.</h1>
             <SpotifyButton></SpotifyButton>
           </div>
         </div>  
@@ -37,5 +37,12 @@ import { api, user } from "../spotify.js"
 </script>
 
 <style>
+.login {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
 

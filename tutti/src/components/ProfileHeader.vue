@@ -5,7 +5,7 @@
       <div class="col-12 col-lg-8 col-xl-8">
         <div class="row">
           <div class="col-8 align-middle my-auto">
-            <h5 class="mb-0" v-if="user">{{ user?.id}}</h5>
+            <h5 class="mb-0" v-if="user">@{{ user?.display_name }}</h5>
             <!-- Dynamic -->
           </div>
           <div class="col-4 d-flex justify-content-end my-auto">
@@ -14,12 +14,12 @@
         </div>
         <div class="row flex-column flex-sm-row align-items-center pt-2">
           <div class="col-md-2">
-            <div class="row">
-              <div class="col-12 pt-1 pb-2 pb-sm-4">
+            <div class="row pt-2 pb-2">
+              <div class="col-12 pb-2 pb-sm-0">
                 <div class="pfp-img m-auto m-0-sm" v-if="user">
-                  <img :src="user?.images[0].url" alt="">
+                  <img class="spotify-img" :src="user?.images[0].url" alt="User Profile Image">
                 </div>
-                <!-- Dynamic -->
+                
               </div>
             </div>
           </div>
@@ -27,17 +27,17 @@
             <div class="row text-center pt-0 justify-content-center justify-content-md-start align-items-center">
               <div class="col-4 col-md-3">
                 <p class="m-0 p-0 font-weight-bold">1</p>
-                <!-- Dynamic -->
+                
                 <p class="m-0 p-0 secondary-text-color">Posts</p>
               </div>
               <div class="col-4 col-md-3">
-                <p class="m-0 p-0 font-weight-bold">123</p>
-                <!-- Dynamic -->
+                <p class="m-0 p-0 font-weight-bold" v-if="user"> {{ user?.followers.total }}</p>
+               
                 <p class="m-0 p-0 secondary-text-color">Followers</p>
               </div>
               <div class="col-4 col-md-3">
                 <p class="m-0 p-0 font-weight-bold">1234</p>
-                <!-- Dynamic -->
+               
                 <p class="m-0 p-0 secondary-text-color">Following</p>
               </div>
             </div>
@@ -45,8 +45,8 @@
         </div>
         <div class="row pt-2">
           <div class="col-12">
-            <h5 v-if="user"> {{ user?.display_name}} <!-- Dynamic --></h5>
-            <p class="secondary-text-color"> Short Bio Lorem ipsum dolor sit amet consectetur, adipisicing elit. <!-- Dynamic --></p>
+            <h5 v-if="user"> {{ user?.display_name}}</h5>
+            <p class="secondary-text-color"> {{bio}} </p>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-block btn-primary mb-4 cta-btn">Edit Profile <i class="bi bi-pencil-square p-1"></i></button>
@@ -64,10 +64,12 @@ export default {
     name: 'ProfileHeader',
     data() {
       return {
-        user: false
+        user: false,
+        bio: "",
       }
     },
     async mounted(){
+      
       await api.init()
       
       // http://michaelthelin.se/spotify-web-api-node/#getMe
@@ -75,8 +77,21 @@ export default {
         this.user = response.body
         console.log(response.body)
       })
-    }
-
+/*       api.getFollowedArtists().then(response => {
+        this.user = response.body
+        console.log(response.body)
+      }) */
+      this.getProfileInfo();
+    },
+    methods: {
+      getProfileInfo: function() {
+        var userRef = db.collection("users").doc("dan_c329")
+        userRef.get().then((doc) => {
+          this.bio = doc.data().bio
+        })
+      },
+      
+    },
   }
 </script>
 
@@ -89,10 +104,15 @@ export default {
     color: white;
   }
   .pfp-img {
-    background-color: green;
-    height: 50px;
-    width: 50px;
+    
+    height: 75px;
+    width: 75px;
     border-radius: 50px;
+  }
+  .pfp-img > .spotify-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   .btn-style {
     background: none;
@@ -114,6 +134,11 @@ export default {
     width: 75px;
     border-radius: 50px;
   }
+  .spotify-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   }
   @media (min-width: 992px) {
   }
@@ -122,7 +147,7 @@ export default {
 
   .pfp-img img {
   width: 75px;
-  height: auto;
+  height: 75px;
   border-radius: 100%;
   }
 </style>
