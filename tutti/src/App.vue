@@ -6,12 +6,31 @@ import { RouterLink, RouterView } from 'vue-router'
 <main>
 <RouterView />
 </main> 
-  <nav>
+  <nav v-if="viewNav">
     <RouterLink to="/feed" class="bi bi-house-fill text-center icon-size"><p class="router-text m-0 p-0">Feed</p></RouterLink>
     <RouterLink to="/post" class="icon-size post-link bi bi-plus-square-fill text-center"><p class="router-text  m-0 p-0">Post</p></RouterLink>
     <RouterLink to="/about" class=" icon-size bi bi-person-fill text-center"><p class="router-text m-0 p-0">Profile</p></RouterLink>
   </nav>
 </template>
+
+<script>
+/* import { api, user } from "../spotify.js" */
+  export default {
+    data() {
+      return {
+        viewNav : true
+      }
+    },
+      methods () {
+      /* if (isAuthenticated) {
+      return (this.getToken()) !== null;
+      
+     } else {
+      this.viewNav = false
+     }  */
+    },
+  }
+</script>
 
 <style scoped>
 nav {

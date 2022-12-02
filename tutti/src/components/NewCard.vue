@@ -8,13 +8,45 @@
           <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
           <!-- &lt;img :src=&quot;image&quot; class=&quot;cover&quot; alt=&quot;Album Cover&quot;&gt; -->
           <!-- <img src="/img/JimmyTest.9c3cfbc1.jpeg" class="cover img-responsive center-block d-block" alt="Album Cover" data-v-040ef000=""> -->
-          <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover">
+          <img :src="post.cover" class="cover img-responsive center-block d-block" alt="Placeholder Album Cover">
         </div>
         <!-- Song Info -->
         <div class="col-sm-7 col-md-8 p-0 pt-3 pt-sm-0">
           <div class="row flex-column">
             <div class="col-12">
-              <p class="text-center secondary-text-color">Web playback buttons</p>
+               <audio controls id="song">
+                <source :src="post.music">
+              </audio>
+             <!--  <div class="audio-player mb-5">
+                <div class="row">
+                  <div class="col-6 text-left currentTime">
+                    current time
+                  </div>
+                  <div class="col-6 text-right durationTime">
+                    total time
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="timeline text-center">
+                      <input
+                        type="range"
+                        id="progress-bar"
+                        min="0"
+                        max=""
+                        value="0"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col text-center mt-4">
+                    <button><span>p/p</span></button>
+                  </div>
+                </div>
+              </div> -->
+
+             <!--  <p class="text-center secondary-text-color">Web playback buttons</p> -->
             </div>
             <div class="col-12">
               <h5>{{ post.song }}</h5>
@@ -65,9 +97,8 @@
     props: ['post'],
     data() {
       return {
+        
       }
-    },
-    methods: {
     },
   }
 </script>

@@ -1,58 +1,60 @@
 <template>
-<div><!-- Search For Song -->
-      <form class="pt-4 pb-4">
+  <div> <!-- Search For Song -->
+      <form class="pt-4 pb-4" @submit.prevent="searchTracks()">
         <div class="form-group row justify-content-center align-items-center">
           <label for="colFormLabelSm" class="col-sm-3 col-md-3 col-lg-3 col-form-label">Search Songs</label>
           <div class="col-sm-9 col-md-9 col-lg-9">
             <div class="input-group"><!-- Dynamic --><!-- Search through songs from spotify, filter through songs as user is typing -->
               <input type="text" v-model="search" ref="searchInput" class="form-control input-style" placeholder="Search Songs" aria-label="Recipient's username" aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button @click="searchTracks()" class="btn btn-primary cta-btn" type="button"><span class="search-btn-txt">Search</span><i class="bi bi-search p-1"></i></button><!-- Button will be used to submit choosen song -->
+                <button  class="btn btn-primary cta-btn" type="submit"><span class="search-btn-txt">Search</span><i class="bi bi-search p-1"></i></button><!-- Button will be used to submit choosen song -->
               </div>
             </div>
           </div>
         </div>
       </form>
       <div class="container d-flex flex-column"><!-- Selected Song Preview -->
-        <div class="row flex-colunm"> <!-- Search Results -->
+        <!-- Search Results -->
+        <!-- Dynamic Results  -->
+        <div class="row flex-colunm pb-3"> 
           <div class="col p-0">
-            <ul class="list-group">
-              <li class="list-group-item" v-for="(track, index) in results" :key="index">
+            <ol class="list-group" id="result-list">
+              <li class="list-group-item" v-for="(item, index) in results" :key="index" @click="pickedTrack(item.id)">
                 <div class="row">
                   <div class="col-3 col-sm-2">
-                    <img style="width: 50px; height: 50px;" class="img-responsive center-block d-block m-auto" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover"/>
+                    <img style="width: 50px; height: 50px;" class="result-imgs img-responsive center-block d-block m-auto" :src="item.album.images[0].url" alt="Placeholder Album Cover"/>
                   </div>
-                  <div class="col-8 p-0">
+                  <div class="col-7 col-sm-8 p-0">
                     <div>
-                      <h5 style="font-size: 16px;">{{track.name}}</h5>
+                      <h5 style="font-size: 16px;">{{item.name}}</h5>
                     </div>
                     <div>
-                      <h6 class="secondary-text-color m-0">{{track.album.name}}</h6>
+                      <h6 class="secondary-text-color m-0">{{item.album.name}}</h6>
                     </div>
                   </div>
-                  <div class="col-1 p-0">
-                    <span  class="bi bi-plus"></span>
+                  <div class="col-2 col-sm-1 p-0 justify-content-center align-self-center">
+                    <span class="bi bi-plus"></span>
                   </div>
                 </div>
               </li>
-            </ul>
+            </ol>
           </div>
         </div>
         <div  class="row">
           <!-- Album Cover -->
           <div class="col-sm-4 col-md-4 p-0 m-0">
             <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
-            <img class="cover img-responsive center-block d-block" src="../assets/images/boston.jpeg" alt="Placeholder Album Cover"/> <!-- {{postAlbumCover}} -->
+            <img :src="albumImg" class="cover img-responsive center-block d-block" alt="Placeholder Album Cover"/> <!-- {{postAlbumCover}} -->
           </div>
           <!-- Song Info -->
           <div class="col-sm-8 col-md-8 p-0 pt-3 pt-sm-0">
             <div class="row flex-column">
               <div class="col-12">
-                <h5>Song Title Goes Here</h5> <!-- {{postSong}} -->
+                <h5>{{trackPreview.name}}</h5> <!-- {{postSong}} -->
                 <!-- Dynamic -->
-                <h6 class="secondary-text-color">Album Name</h6> <!-- {{postAlbumTitle}} -->
+                <h6 class="secondary-text-color"> {{albumPreview.name}} </h6> <!-- {{postAlbumTitle}} -->
                 <!-- Dynamic -->
-                <p class="secondary-text-color">Artist Name</p> <!-- {{postArtist}} -->
+                 <p class="secondary-text-color"> {{artistPreview}}</p>
                 <!-- Dynamic -->
               </div>
             </div>
@@ -78,20 +80,24 @@
             <!-- Submit post to firestore -->
           </div>
         </div>
-      </div>
+  </div>
 </template>
 
 
 <script>
-
 import { api, user } from "../spotify.js"
   export default {
     data() {
       return {
-        results: "",
+        results: [],
+        trackPreview: [],
+        albumPreview: [],
+        albumImg: "",
+        artistPreview: "",
         search: "",
         user: false,
         new_post: {
+          cover: [],
           /* song: "Song Title",
           album: "Album Title",
           artist: "Artist Name",
@@ -115,30 +121,54 @@ import { api, user } from "../spotify.js"
         searchTracks: function() {
           const inputValue = this.$refs.searchInput.value
           this.search = `${inputValue}`;
+          var that = this;
           console.log(this.search)
-
           api.searchTracks( this.search , {limit: 10}).then(function(data) {
-      // Print some information about the results
-      console.log('I got ' + data.body.tracks.total + ' results!');
+          // Print some information about the results
+          console.log('I got ' + data.body.tracks.total + ' results!');
+          // Go through the first page of results
+          that.results = data.body.tracks.items;
+          console.log("Results", that.results)
+          })
+        },
 
-       // Go through the first page of results
-       var results = data.body.tracks.items;
-      console.log('The tracks in the first page are (popularity in parentheses):');
+        artistArrayToString(arr){
+          let str = ''
 
-      results.forEach(function(track, index) {
-      
-      console.log(index + ': ' + track.name + ': ' + track.album.name + ': ' + track.album.images[0].url + ': ' + track.id + ' (' + track.popularity + ')');
-      });
-      }).catch(function(err) {
-      console.log('Something went wrong:', err.message);})
+          arr.forEach((item, index, arr) => {
+            //  if last item don't use comma
+            str += `${item.name}`
+          })
+
+          return str
+
+        },
+
+
+        pickedTrack: function(id) {
+          api.getTrack(id).then(response => {
+            this.trackPreview = response.body,
+            this.albumPreview = this.trackPreview.album,
+            this.artistPreview = this.artistArrayToString(this.trackPreview.artists),
+            this.albumImg = this.albumPreview.images[0].url,
+            this.music = this.trackPreview.preview_url,
+            console.log(response.body)
+          })
+          .then(() => {
+            
+            var list = document.getElementById("result-list");
+            list.classList.add("hidden");
+          })
         },
 
         newPost: function() {
           db.collection("posts")
           .add({
-            song: "Song Title",
-            album: "Album Title",
-            artist: "Artist Name",
+            cover: this.albumImg,
+            music: this.music,
+            song: this.trackPreview.name,
+            album: this.albumPreview.name,
+            artist: this.artistPreview,
             userPic: this.user?.images[0].url,
             username: this.user?.id,
             caption: this.new_post.caption,
@@ -216,6 +246,20 @@ import { api, user } from "../spotify.js"
     padding-top: 12px;
     padding-bottom: 12px;
     padding: 10px;
+  }
+  .list-group-item:first-child {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+  }
+  .list-group-item:last-child {
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+  }
+  .result-imgs {
+    border-radius: .25rem;
+  }
+  .hidden {
+    display: none;
   }
   @media (min-width: 576px) {
     .search-btn-txt {

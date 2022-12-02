@@ -32,7 +32,9 @@ import MainHeader from "../components/MainHeader.vue";
           quearySnapshot.forEach((doc) => {
             this.posts.push({
               id: doc.id,
+              music: doc.data().music,
               song: doc.data().song,
+              cover: doc.data().cover,
               album: doc.data().album,
               artist: doc.data().artist,
               userPic: doc.data().userPic,
@@ -43,6 +45,9 @@ import MainHeader from "../components/MainHeader.vue";
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
               likes: doc.data().likes,
             })
+/*             if (doc.data().cover = null) {
+              
+            } */
           })
         })
       }
@@ -59,11 +64,11 @@ import MainHeader from "../components/MainHeader.vue";
 
 <style>
   .feed {
-    margin-top: 150px;
-    padding: 0;
     margin: 0;
+    margin-bottom: 8rem;
+    padding: 0;
+    
     width: 100%;
-    height: 100vh;
   }
 </style>
 

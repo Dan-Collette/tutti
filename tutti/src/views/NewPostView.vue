@@ -20,7 +20,6 @@ import MainHeader from '../components/MainHeader.vue';
 <style>
   .post {
     width: 100%;
-    height: 100vh;
-    
+    margin-bottom: 8rem;
   }
 </style>
