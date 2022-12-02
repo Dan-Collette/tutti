@@ -31,7 +31,6 @@ import { api, user } from "../spotify.js"
     methods: {
     },
     mounted(){
-
     }
   }
 </script>
