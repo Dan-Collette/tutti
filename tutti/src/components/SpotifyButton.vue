@@ -25,7 +25,7 @@
         // @url https://developer.spotify.com/documentation/general/guides/authorization/implicit-grant/
         let authURL = new URL('https://accounts.spotify.com/authorize')
 
-        authURL.searchParams.set('client_id', import.meta.env.VITE_SPOTIFY_CLIENT_ID);
+        authURL.searchParams.set('client_id', process.env.VITE_SPOTIFY_CLIENT_ID);
         authURL.searchParams.set('response_type', 'token'); 
         authURL.searchParams.set('redirect_uri', `${window.location.origin}/callback`);
 
