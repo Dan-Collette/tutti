@@ -16,7 +16,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
+window.db = firebase.firestore();
 
 /* const firebase = require("firebase");
 require("firebase/firestore"); */
