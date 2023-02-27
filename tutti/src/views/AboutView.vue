@@ -91,6 +91,7 @@ import { api, user } from "../spotify.js"
     },
   }
 </script>
+
 <script setup>
 import ProfileHeader from '../components/ProfileHeader.vue';
 import MainHeader from '../components/MainHeader.vue'
