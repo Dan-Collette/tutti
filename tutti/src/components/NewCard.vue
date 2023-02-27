@@ -78,9 +78,7 @@
         </div>
         <div class="col-6 p-0">
           <!-- Like --><!-- Will need to change state based on firestore data -->
-          <button class="bi bi-heart post-icon pr-2"><span>{{post.likesNum}}</span></button>
-          <!-- Share -->
-          <button type="button" class="bi bi-share-fill post-icon pl-2 pr-2"></button>
+          <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button>
         </div>
         <div class="col-6 p-0 d-flex justify-content-end">
           <p class="mb-0 pr-2 dt">{{post.createdDate}}</p>
@@ -92,8 +90,8 @@
 </div>
 </template>
 
-
 <script>
+  import { api, user } from "../spotify.js"
   export default {
     props: ['post'],
     data() {
@@ -101,6 +99,73 @@
         
       }
     },
+    async mounted(){
+      await api.init()
+
+      api.getMe().then(response =>{
+        this.user = response.body
+        /* console.log(response.body) */
+      })
+      this.addTrackToLibrary(user)
+    },
+    methods: {
+    addTrackToLibrary() {
+      var userID = this.user;
+      var musicId = this.post.id.musicId;
+      const endpoint = 'https://api.spotify.com/v1/me/tracks';
+      const headers = { Authorization: `${userID}` };
+      const data = { ids: [musicId] };
+
+      fetch(endpoint, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Track added to library:', data);
+        })
+        .catch(error => {
+          console.error('Error adding track to library:', error);
+        });
+    }
+  },
+/*     methods: {
+
+      addToMySavedTracks: function(user, id) {
+        var id = post.id;
+
+        console.log("clicked")
+      return WebApiRequest.builder(this.getAccessToken())
+      .withPath('/v1/me/tracks')
+      .withHeaders({ 'Content-Type': 'application/json' })
+      .withBodyParameters({ ids: this.musicId })
+      .build()
+      .execute(HttpManager.put, user);
+      },
+
+        addToLibrary: function(user, id) {
+        
+        this.addToMySavedTracks( this.musicId );
+        console.log( "Hello?" );
+       } 
+    }, */
+    /* async mounted(){
+      await api.init()
+
+        this.user = response.body
+        console.log(response.body)
+      })
+    
+      
+    },
+    mounted: {
+      
+        // firebase get posts
+        // ....
+
+        // this.posts = results
+    }, */
   }
 </script>
 
