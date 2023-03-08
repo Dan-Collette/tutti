@@ -78,9 +78,9 @@
         </div>
         <div class="col-6 p-0">
           <!-- Like --><!-- Will need to change state based on firestore data -->
-           <!-- <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button>  -->
-           
-           <button class="bi bi-plus-circle-fill post-icon pr-2 add-track" @click="colorChange"></button>
+           <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button> 
+           <!-- 
+           <button class="bi bi-plus-circle-fill post-icon p-0 add-track"></button> -->
         </div>
         <div class="col-6 p-0 d-flex justify-content-end">
           <p class="mb-0 pr-2 dt">{{post.createdDate}}</p>
@@ -109,10 +109,10 @@
         /* this.addTrackToLibrary(user); */
         /* console.log(response.body) */
       })
-      /* this.addTrackToLibrary(user); */
+       this.addTrackToLibrary(user);
     },
     
-    /* methods: {
+     methods: {
     addTrackToLibrary() {
       var userID = this.user?.id;
       var musicId = this.post.id.musicId;
@@ -133,7 +133,7 @@
           console.error('Error adding track to library:', error);
         });
     }
-  }, */
+  },
 /*     methods: {
 
       addToMySavedTracks: function(user, id) {

@@ -40,7 +40,7 @@ import { api, user } from "../spotify.js"
     methods: {
       /* `${this.user?.id}` */
       getUserPosts: function() {
-        db.collection("posts").where("userID", "==", `${this.user?.id}`)
+        db.collection("posts").where("userID", "==", `${this.user?.id}`).orderBy("timestamp", "desc")
     .get(this.posts)
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
