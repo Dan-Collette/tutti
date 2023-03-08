@@ -3,6 +3,7 @@ import LoginFlow from "../views/LoginFlow.vue";
 import Login from "../views/Login.vue";
 import FeedView from "../views/FeedView.vue";
 import NewPost from "../views/NewPostView.vue";
+import InfoView from "../views/InfoView.vue";
 import { user } from "../spotify.js";
 
 const router = createRouter({
@@ -57,6 +58,11 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
+    },
+    {
+      path: "/info",
+      name: "info",
+      component: InfoView,
     },
   ],
 });

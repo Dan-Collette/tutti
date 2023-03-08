@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome-landing">
+  <div class="welcome-landing mt-5">
     <div class="col mb-5">
       <div class="pb-3">
         <div class="pfp-img m-auto m-0-sm" v-if="user">
@@ -11,7 +11,8 @@
         <h2>Thanks For Joining Tutti!</h2>
       </div>
     </div>
-    <form>
+
+   <!--  <form class="justify-content-center">
       <div>
         <h3>Profile Information</h3>
       </div>
@@ -22,16 +23,24 @@
         </div>
       </div>
     </form>
-    <div class="row flex-row pt-2 justify-content-between">
-      <div class="col-sm-5 align-items-lef pt-2 pb-2">
-        <router-link to="/feed" class="btn btn-block btn-secondary skip-btn text-center">Skip To Feed<i class="bi bi-arrow-right p-1"></i></router-link>
+    <div class="col-sm-6 p-0 pr-sm-3 pl-0">
+      <button @submit="new_user()" class="btn btn-block btn-secondary skip-btn text-center">Update Profile<i class="bi bi-cloud-arrow-up-fill p-1"></i></button>
+    </div>
+    <br> -->
+    <hr>
+    <div class="row flex-row pt-2 justify-content-center">
+      <div class="col-sm-6 align-items-lef pt-3">
+        <RouterLink to="/info" class="btn btn-block btn-primary cta-btn  text-center">Tutorial<i class="bi bi-info-circle p-1"></i></RouterLink>
       </div>
-      <div class="col-sm-5 pt-2 pb-2">
+      <div class="col-sm-6 align-items-lef pt-3 pb-5">
+        <router-link to="/feed" class="btn btn-block btn-secondary skip-btn text-center">View Feed<i class="bi bi-arrow-right p-1"></i></router-link>
+      </div>
+      <!-- <div class="col-sm-5 pt-2 pb-2">
         <button @click="newUser()" class="btn btn-block btn-primary cta-btn text-center">Update Profile<i class="bi bi-cloud-arrow-up-fill p-1"></i></button>
-        <!-- Submit post to firestore -->
-      </div>
+      </div> -->
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -52,29 +61,30 @@ export default {
       
       // http://michaelthelin.se/spotify-web-api-node/#getMe
         api.getMe().then(response =>{
-        this.user = response.body
-        console.log(response.body)
+        this.user = response.body;
+        console.log(response.body);
         
       })
     },
-    methods: {
+     /* methods: {
       newUser: function() {
         db.collection("users").doc(this.user?.id)
-        .set({
+        .add({
           profilePic: this.user?.images[0].url,
           username: this.user?.id,
           fullName: this.user?.display_name,
           bio: this.new_user.bio,
         })
-        .then(() => {
-          this.$router.push('/feed');
-        })
       }
-    },
+    },  */
   }
 </script>
 
 <style scoped>
+hr {
+  border-color: #f2f2f2;
+  opacity: 25%;
+}
 h1 {
   font-size: 32px;
 }
@@ -87,11 +97,14 @@ h2 {
 h3 {
   font-size: 22px;
 }
+p {
+  font-size: 18px;
+  color: #fff;
+}
 .welcome-landing {
   margin-bottom: 3rem;
 }
 .pfp-img {
-  background-color: aqua;
   height: 125px;
   width: 125px;
   border-radius: 50%;
@@ -115,5 +128,15 @@ h3 {
   font-family: proxima-nova, sans-serif;
   font-weight: 400;
   font-style: normal
+}
+.modal-content {
+  background-color: #1D1D1D;
+}
+.modal-footer {
+  border-top: 1px solid #f2f2f239;
+}
+
+
+@media (min-width: 768px) {
 }
 </style>

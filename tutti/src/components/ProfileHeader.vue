@@ -1,18 +1,25 @@
 <template>
 <div class="pf-header">
-  <div class="container d-flex flex-column">
+  <div class="container d-flex flex-column pb-3">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-8 col-xl-8">
-        <div class="row">
-          <div class="col-8 align-middle my-auto">
-            <h5 class="mb-0" v-if="user">@{{ user?.display_name }}</h5>
-            <!-- Dynamic -->
+        <div class="row pt-3 pb-2">
+          <div class="col-10 align-middle my-auto ">
+            <div class="row flex-row pl-3">
+              <div class="pfp-img" v-if="user">
+                <img class="spotify-img" :src="user?.images[0].url" alt="User Profile Image">
+              </div>
+              <div class="col my-auto">
+                <h5 class="pl-3" v-if="user"> {{ user?.display_name}}</h5>
+              <p class="secondary-text-color pl-3 m-0" > {{bio}} </p>
+              </div>
+            </div>
           </div>
-          <div class="col-4 d-flex justify-content-end my-auto">
-            <button class="btn btn-style bi bi-door-open-fill p-0"></button>
+          <div class="col-2 d-flex justify-content-end my-auto">
+            <RouterLink to="/callback" class="logout bi bi-door-open-fill p-0"></RouterLink>
           </div>
         </div>
-        <div class="row flex-column flex-sm-row align-items-center pt-2">
+        <!-- <div class="row flex-column flex-sm-row align-items-center pt-2">
           <div class="col-md-2">
             <div class="row pt-2 pb-2">
               <div class="col-12 pb-2 pb-sm-0">
@@ -34,24 +41,24 @@
                 <p class="m-0 p-0 font-weight-bold" v-if="user"> {{ user?.followers.total }}</p>
                
                 <p class="m-0 p-0 secondary-text-color">Followers</p>
-              </div>
-              <div class="col-4 col-md-3">
+              </div> -->
+              <!-- <div class="col-4 col-md-3">
                 <p class="m-0 p-0 font-weight-bold">1234</p>
                
                 <p class="m-0 p-0 secondary-text-color">Following</p>
-              </div>
-            </div>
+              </div> -->
+           <!--  </div>
           </div>
         </div>
         <div class="row pt-2">
-          <div class="col-12">
+          <div class="col-12 pb-2">
             <h5 v-if="user"> {{ user?.display_name}}</h5>
-            <p class="secondary-text-color"> {{bio}} </p>
-          </div>
-          <div class="col-sm-6">
+             <p class="secondary-text-color"> {{bio}} </p>
+          </div> -->
+          <!-- <div class="col-sm-6">
             <button class="btn btn-block btn-primary mb-4 cta-btn">Edit Profile <i class="bi bi-pencil-square p-1"></i></button>
-          </div>
-        </div>
+          </div> 
+        </div>-->
       </div>
     </div>
   </div>
@@ -76,16 +83,17 @@ export default {
       api.getMe().then(response =>{
         this.user = response.body
         console.log(response.body)
+        this.getProfileInfo(user);
       })
 /*       api.getFollowedArtists().then(response => {
         this.user = response.body
         console.log(response.body)
       }) */
-      this.getProfileInfo();
+    /* this.getProfileInfo(user); */
     },
     methods: {
       getProfileInfo: function() {
-        var userRef = db.collection("users").doc("dan_c329")
+        var userRef = db.collection("users").doc(`${this.user?.id}`)
         userRef.get().then((doc) => {
           this.bio = doc.data().bio
         })
@@ -96,6 +104,10 @@ export default {
 </script>
 
 <style scoped>
+.logout {
+  color: #E1E1E1;
+  font-size: 24px;
+}
 .secondary-text-color {
     color: #E1E1E1;
   }
@@ -105,8 +117,8 @@ export default {
   }
   .pfp-img {
     
-    height: 75px;
-    width: 75px;
+    height: 50px;
+    width: 50px;
     border-radius: 50px;
   }
   .pfp-img > .spotify-img {

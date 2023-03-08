@@ -1,9 +1,12 @@
 <template>
   <header>
     <div class="container">
-      <div class="row">
-        <div class="col p-0 pl-sm-3">
+      <div class="row align-items-center">
+        <div class="col-6 p-0 pl-sm-3">
           <img class="main-logo" src="../assets/images/tutti.png" alt="Tutti Logo"/>
+        </div>
+        <div class="col-6 p-0 pl-sm-3 d-flex justify-content-end">
+          <RouterLink to="/info" class="bi-info-circle info"></RouterLink>
         </div>
       </div>  
     </div>
@@ -30,6 +33,10 @@ h1 {
 .main-logo {
   width: auto;
   height: 25px;
+}
+.info {
+  color: #f2f2f2;
+  font-size: 18px;
 }
 @media (min-width: 576px) {
   .main-logo {

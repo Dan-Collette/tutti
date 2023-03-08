@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <main>
 <RouterView />
 </main> 
-  <nav v-if="viewNav">
+  <nav >
     <RouterLink to="/feed" class="bi bi-house-fill text-center icon-size"><p class="router-text m-0 p-0">Feed</p></RouterLink>
     <RouterLink to="/post" class="icon-size post-link bi bi-plus-square-fill text-center"><p class="router-text  m-0 p-0">Post</p></RouterLink>
     <RouterLink to="/about" class=" icon-size bi bi-person-fill text-center"><p class="router-text m-0 p-0">Profile</p></RouterLink>
@@ -18,7 +18,7 @@ import { RouterLink, RouterView } from 'vue-router'
   export default {
     data() {
       return {
-        viewNav : true
+        /* viewNav : true */
       }
     },
       methods () {
@@ -33,6 +33,9 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <style scoped>
+html {
+  scroll-behavior: smooth;
+}
 nav {
 padding-left: 2rem;
 padding-right: 2rem;

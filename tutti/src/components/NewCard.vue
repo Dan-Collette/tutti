@@ -13,7 +13,7 @@
         <!-- Song Info -->
         <div class="col-sm-7 col-md-8 p-0 pt-3 pt-sm-0">
           <div class="row flex-column">
-            <div class="col-12">
+            <div class="col-12 p-0">
                <audio controls id="song">
                 <source :src="post.music">
               </audio>
@@ -78,7 +78,9 @@
         </div>
         <div class="col-6 p-0">
           <!-- Like --><!-- Will need to change state based on firestore data -->
-          <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button>
+           <!-- <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button>  -->
+           
+           <button class="bi bi-plus-circle-fill post-icon pr-2 add-track" @click="colorChange"></button>
         </div>
         <div class="col-6 p-0 d-flex justify-content-end">
           <p class="mb-0 pr-2 dt">{{post.createdDate}}</p>
@@ -103,14 +105,16 @@
       await api.init()
 
       api.getMe().then(response =>{
-        this.user = response.body
+        this.user = response.body;
+        /* this.addTrackToLibrary(user); */
         /* console.log(response.body) */
       })
-      this.addTrackToLibrary(user)
+      /* this.addTrackToLibrary(user); */
     },
-    methods: {
+    
+    /* methods: {
     addTrackToLibrary() {
-      var userID = this.user;
+      var userID = this.user?.id;
       var musicId = this.post.id.musicId;
       const endpoint = 'https://api.spotify.com/v1/me/tracks';
       const headers = { Authorization: `${userID}` };
@@ -129,7 +133,7 @@
           console.error('Error adding track to library:', error);
         });
     }
-  },
+  }, */
 /*     methods: {
 
       addToMySavedTracks: function(user, id) {
@@ -213,6 +217,22 @@ p {
 .dt {
   font-size: 12px!important;
   align-self: center;
+}
+.add-track {
+  color: #E1E1E1;
+  border: none;
+}
+.add-track:active {
+  color: #CA0CF9;
+  border: none;
+}
+.add-track:focus {
+  color: #CA0CF9;
+  border: none;
+}
+.add-track:after {
+  color: #CA0CF9;
+  border: none;
 }
 @media (min-width: 576px) {
   .cover {

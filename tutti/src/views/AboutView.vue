@@ -4,7 +4,7 @@
     <ProfileHeader/>
     <div class="container justify-content-center">
       <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-8">
+        <div class="col-12 col-md-10 col-lg-8 mb-5 pb-5">
           <template  v-for="post in posts">
             <NewCard :post="post"/>
           </template>
@@ -26,10 +26,11 @@ import { api, user } from "../spotify.js"
       
       // http://michaelthelin.se/spotify-web-api-node/#getMe
       api.getMe().then(response =>{
-        this.user = response.body
+        this.user = response.body;
+        this.getUserPosts(user);
       })
 
-      this.getUserPosts(user);
+      
       /* this.getPosts(); */
         // firebase get posts
         // ....
@@ -37,11 +38,9 @@ import { api, user } from "../spotify.js"
         // this.posts = results
     },
     methods: {
-      
+      /* `${this.user?.id}` */
       getUserPosts: function() {
-        var userID = this.user;
-        console.log(userID);
-        db.collection("posts").where("username", "==", "dan_c329")
+        db.collection("posts").where("userID", "==", `${this.user?.id}`)
     .get(this.posts)
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -52,12 +51,12 @@ import { api, user } from "../spotify.js"
               album: doc.data().album,
               artist: doc.data().artist,
               username: doc.data().username,
+              userID: doc.data().userID,
               userPic: doc.data().userPic,
               caption: doc.data().caption,
               timestamp: doc.data().timestamp,
               createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-              likes: doc.data().likes,
             })
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());

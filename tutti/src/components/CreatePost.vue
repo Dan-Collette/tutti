@@ -44,7 +44,7 @@
           <!-- Album Cover -->
           <div class="col-sm-4 col-md-4 p-0 m-0">
             <!-- WILL NEED TO BE DYNAMICALLY CHANGED WITH CODE -->
-            <img :src="albumImg" class="cover img-responsive center-block d-block" alt="Placeholder Album Cover"/> <!-- {{postAlbumCover}} -->
+            <img :src="albumImg" class="cover img-responsive center-block d-block"/> <!-- {{postAlbumCover}} -->
           </div>
           <!-- Song Info -->
           <div class="col-sm-8 col-md-8 p-0 pt-3 pt-sm-0">
@@ -143,7 +143,7 @@ import { api, user } from "../spotify.js"
           return str
 
         },
-        
+
 
 
         pickedTrack: function(id) {
@@ -171,12 +171,10 @@ import { api, user } from "../spotify.js"
             album: this.albumPreview.name,
             artist: this.artistPreview,
             userPic: this.user?.images[0].url,
-            username: this.user?.id,
+            username: this.user?.display_name,
+            userID: this.user?.id,
             caption: this.new_post.caption,
             timestamp: this.new_post.timestamp,
-            likes: [],
-            likesNum: 0,
-            postLiked: false,
           })
           .then(() => {
             this.$router.push('/feed');
@@ -195,6 +193,8 @@ import { api, user } from "../spotify.js"
 </script>
 
 <style scoped>
+
+
   .cover {
     width: 150px;
     height: 150px;
