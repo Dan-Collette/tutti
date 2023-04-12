@@ -66,14 +66,7 @@ router.beforeEach(async (to, from, next) => {
   const authenticated = await user.isAuthenticated();
   console.log()
   if (!authenticated){
-    window.location.href = (()=> {
-      if(process.env.NODE_ENV === 'development'){
-        // "/login" route doesn't exist in dev mode (use prod instead)
-        return 'https://tutti-7760e.web.app/login'
-      }else{
-        return '/login'
-      }
-    })()
+    window.location.href = 'https://us-central1-tutti-7760e.cloudfunctions.net/spotify'
   }
   else next();
 });
