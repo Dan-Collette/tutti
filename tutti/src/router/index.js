@@ -66,7 +66,7 @@ router.beforeEach(async (to, from, next) => {
   const authenticated = await user.isAuthenticated();
   console.log()
   if (!authenticated){
-    window.location.href = 'https://us-central1-tutti-7760e.cloudfunctions.net/spotify'
+    window.location.href = 'https://us-central1-tutti-7760e.cloudfunctions.net/spotify/login'
   }
   else next();
 });
