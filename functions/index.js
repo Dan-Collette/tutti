@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = functions.config().spotify.client_id; // Your client id
 var client_secret = functions.config().spotify.client_secret; // Your secret
-var redirect_uri = 'REDIRECT_URI'; // Your redirect uri
+var redirect_uri = functions.config().spotify.redirect_uri; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
