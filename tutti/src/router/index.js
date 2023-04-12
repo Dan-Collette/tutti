@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginFlow from "../views/LoginFlow.vue";
-import Login from "../views/Login.vue";
 import FeedView from "../views/FeedView.vue";
 import NewPost from "../views/NewPostView.vue";
 import InfoView from "../views/InfoView.vue";
@@ -9,11 +8,7 @@ import { user } from "../spotify.js";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    // {
-    //   path: "/login",
-    //   name: "login",
-    //   component: Login,
-    // },
+
 
     // // Logic for the oAuth callback from spotify
     // {
@@ -69,8 +64,17 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authenticated = await user.isAuthenticated();
-  if (to.name !== "login" && to.name !== "callback" && !authenticated)
-    next({ name: "login" });
+  console.log()
+  if (!authenticated){
+    window.location.href = (()=> {
+      if(process.env.NODE_ENV === 'development'){
+        // "/login" route doesn't exist in dev mode (use prod instead)
+        return 'https://tutti-7760e.web.app/login'
+      }else{
+        return '/login'
+      }
+    })()
+  }
   else next();
 });
 
