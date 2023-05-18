@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="col-2 d-flex justify-content-end my-auto">
-            <RouterLink to="/callback" class="logout bi bi-door-open-fill p-0"></RouterLink>
+            <a @click="logout()" href="/#" class="logout bi bi-door-open-fill p-0"></a>
           </div>
         </div>
         <!-- <div class="row flex-column flex-sm-row align-items-center pt-2">
@@ -98,6 +98,14 @@ export default {
           this.bio = doc.data().bio
         })
       },
+
+      logout: async function(){
+        await user.setToken(null);
+        await user.setExpires(null);
+
+        return { to: "home" };
+
+      }
       
     },
   }

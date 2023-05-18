@@ -78,7 +78,8 @@
         </div>
         <div class="col-6 p-0">
           <!-- Like --><!-- Will need to change state based on firestore data -->
-           <button @click="addTrackToLibrary(post.id)" class="bi bi-plus-circle-fill post-icon pr-2"></button> 
+           <!-- Only show if we have a valid spotifyID for this track  -->
+          <button v-if="post.spotifyID" @click="addTrackToLibrary(post.spotifyID)" class="bi bi-plus-circle-fill post-icon pr-2"></button> 
            <!-- 
            <button class="bi bi-plus-circle-fill post-icon p-0 add-track"></button> -->
         </div>
@@ -103,35 +104,39 @@
     },
     async mounted(){
       await api.init()
-
-      api.getMe().then(response =>{
-        this.user = response.body;
-        /* this.addTrackToLibrary(user); */
-        /* console.log(response.body) */
-      })
-       this.addTrackToLibrary(user);
+      // console.log(this.post)
     },
     
      methods: {
-    addTrackToLibrary() {
-      var userID = this.user?.id;
-      var musicId = this.post.id.musicId;
-      const endpoint = 'https://api.spotify.com/v1/me/tracks';
-      const headers = { Authorization: `${userID}` };
-      const data = { ids: [musicId] };
+    addTrackToLibrary(musicId) {
+      // // Don't use
+      // var userID = this.user?.id;
+      // var musicId = this.post.id.musicId;
 
-      fetch(endpoint, {
-        method: 'PUT',
-        headers: headers,
-        body: JSON.stringify(data)
+      // const endpoint = 'https://api.spotify.com/v1/me/tracks';
+      // const headers = { Authorization: `${userID}` };
+      // const data = { ids: [musicId] };
+
+      // fetch(endpoint, {
+      //   method: 'PUT',
+      //   headers: headers,
+      //   body: JSON.stringify(data)
+      // })
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     console.log('Track added to library:', data);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error adding track to library:', error);
+      //   });
+
+      // Use the API lib instead: https://github.com/thelinmichael/spotify-web-api-node
+      console.log(musicId)
+      api.addToMySavedTracks([musicId]).then(data =>{
+        console.log("Track Saved!")
+      }).catch(error =>{
+        console.log(error)
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Track added to library:', data);
-        })
-        .catch(error => {
-          console.error('Error adding track to library:', error);
-        });
     }
   },
 /*     methods: {

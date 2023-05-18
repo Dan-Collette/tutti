@@ -22,26 +22,31 @@
     methods: {
       startAuth(){
 
-        // Using Implicit Grant
-        // @url https://developer.spotify.com/documentation/general/guides/authorization/implicit-grant/
-        let authURL = new URL('https://accounts.spotify.com/authorize')
+        // // Using Implicit Grant
+        // // @url https://developer.spotify.com/documentation/general/guides/authorization/implicit-grant/
+        // let authURL = new URL('https://accounts.spotify.com/authorize')
 
-        authURL.searchParams.set('client_id', process.env.VITE_SPOTIFY_CLIENT_ID);
-        authURL.searchParams.set('response_type', 'token'); 
-        authURL.searchParams.set('redirect_uri', `${window.location.origin}/callback`);
+        // authURL.searchParams.set('client_id', process.env.VITE_SPOTIFY_CLIENT_ID);
+        // authURL.searchParams.set('response_type', 'token'); 
+        // authURL.searchParams.set('redirect_uri', `${window.location.origin}/callback`);
         
-        // https://developer.spotify.com/documentation/general/guides/authorization/scopes/
-        authURL.searchParams.set('scope', "user-library-modify");
+        // // https://developer.spotify.com/documentation/general/guides/authorization/scopes/
+        // authURL.searchParams.set('scope', "user-library-modify");
 
-        // This should be stored locally and checked upon redirect for CSRF
-        authURL.searchParams.set('state', this.uuid);
+        // // This should be stored locally and checked upon redirect for CSRF
+        // authURL.searchParams.set('state', this.uuid);
 
-        // Gooooooo.....
-        console.log(authURL)
+        // // Gooooooo.....
+        // console.log(authURL)
+        const authURL = (import.meta.env.DEV) ?
+          'http://127.0.0.1:5001/tutti-7760e/us-central1/spotify/login' :
+          'https://us-central1-tutti-7760e.cloudfunctions.net/spotify/login'
+        
         window.location.assign(authURL)
       }
     },
     mounted(){
+      console.log(import.meta.env.DEV)
       localStorage.setItem('uuid', this.uuid)
     }
   }

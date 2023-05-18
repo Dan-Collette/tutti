@@ -28,13 +28,45 @@ var stateKey = 'spotify_auth_state';
 
 var app = express();
 
+
 app.use(express.static(__dirname + '/public'))
     .use(cors())
     .use(cookieParser());
 
+app.use(function (req, res, next) {
+
+    let emulator = Boolean(process.env.FUNCTIONS_EMULATOR),
+        region = 'us-central1',
+        project = process.env.GCLOUD_PROJECT,
+        name = process.env.FUNCTION_TARGET
+
+    req.self = function () {
+        if(emulator){
+            return `http://${req.get('host')}/${project}/${region}/${name}`
+        }else{
+            return `https://${region}-${project}.cloudfunctions.net/${name}`
+        }
+    }
+
+    req.appUrl = function () {
+        if (emulator) {
+            return 'http://localhost:5173/'
+        } else {
+            return 'https://tutti-7760e.web.app/'
+        }
+    }    
+    return next();
+});
+
+app.get('/', function(req, res) {
+    res.send([req.self(), process.env])
+})
+
 app.get('/login', function (req, res) {
 
+
     var state = generateRandomString(16);
+    console.log(stateKey, state)
     res.cookie(stateKey, state);
 
     // your application requests authorization
@@ -43,8 +75,8 @@ app.get('/login', function (req, res) {
         querystring.stringify({
             response_type: 'code',
             client_id: client_id,
-            scope: scope,
-            redirect_uri: redirect_uri,
+            'scope': scope,
+            redirect_uri: `${req.self()}/callback`,
             state: state
         }));
 });
@@ -69,14 +101,16 @@ app.get('/callback', function (req, res) {
             url: 'https://accounts.spotify.com/api/token',
             form: {
                 code: code,
-                redirect_uri: redirect_uri,
+                redirect_uri: `${req.self()}/callback`,
                 grant_type: 'authorization_code'
             },
             headers: {
-                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+                'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
             },
             json: true
         };
+
+
 
         request.post(authOptions, function (error, response, body) {
             if (!error && response.statusCode === 200) {
@@ -96,16 +130,21 @@ app.get('/callback', function (req, res) {
                 });
 
                 // we can also pass the token to the browser to make requests from there
-                res.redirect('/#' +
+                res.redirect(`${req.appUrl()}handleLogin?` +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token
                     }));
             } else {
-                res.redirect('/#' +
-                    querystring.stringify({
-                        error: 'invalid_token'
-                    }));
+                res.send({
+                    error,
+                    body
+                })
+                // res.redirect('/#' +
+                //     querystring.stringify({
+                //         error: 'invalid_token',
+                //         error
+                //     }));
             }
         });
     }
@@ -117,7 +156,7 @@ app.get('/refresh_token', function (req, res) {
     var refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
-        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+        headers: { 'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')) },
         form: {
             grant_type: 'refresh_token',
             refresh_token: refresh_token
@@ -131,6 +170,11 @@ app.get('/refresh_token', function (req, res) {
             res.send({
                 'access_token': access_token
             });
+        }else{
+            res.send({
+                error,
+                'code': response.statusCode
+            })
         }
     });
 });
