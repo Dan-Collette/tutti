@@ -30,6 +30,7 @@ import MainHeader from "../components/MainHeader.vue";
         db.collection("posts").orderBy("timestamp", "desc").onSnapshot((quearySnapshot) => {
           this.posts = [];
           quearySnapshot.forEach((doc) => {
+            console.log(doc.data())
             this.posts.push({
               id: doc.id,
               music: doc.data().music,
@@ -44,6 +45,7 @@ import MainHeader from "../components/MainHeader.vue";
               createdDate: doc.data().timestamp.toDate().toLocaleDateString(),
               createdTime: doc.data().timestamp.toDate().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
               likes: doc.data().likes,
+              spotifyID: doc.data().spotifyID || null
             })
 /*             if (doc.data().cover = null) {
               

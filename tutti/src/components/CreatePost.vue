@@ -29,7 +29,7 @@
                       <h5 style="font-size: 16px;">{{item.name}}</h5>
                     </div>
                     <div>
-                      <h6 class="secondary-text-color m-0">{{item.album.name}}</h6>
+                      <h6 class="secondary-text-color m-0">{{ artistArrayToString(item.artists) }}</h6>
                     </div>
                   </div>
                   <div class="col-2 col-sm-1 p-0 justify-content-center align-self-center">
@@ -52,7 +52,7 @@
               <div class="col-12">
                 <h5>{{trackPreview.name}}</h5> <!-- {{postSong}} -->
                 <!-- Dynamic -->
-                <h6 class="secondary-text-color"> {{albumPreview.name}} </h6> <!-- {{postAlbumTitle}} -->
+                <h6 class="secondary-text-color"> {{albumPreview.name}} </h6> {{postAlbumTitle}}
                 <!-- Dynamic -->
                  <p class="secondary-text-color"> {{artistPreview}}</p>
                 <!-- Dynamic -->
@@ -94,6 +94,7 @@ import { api, user } from "../spotify.js"
         albumPreview: [],
         albumImg: "",
         artistPreview: "",
+        spotifyID: '',
         search: "",
         user: false,
         new_post: {
@@ -148,7 +149,9 @@ import { api, user } from "../spotify.js"
 
         pickedTrack: function(id) {
           api.getTrack(id).then(response => {
+            console.log(response)
             this.trackPreview = response.body,
+            this.spotifyID = response.body.id
             this.albumPreview = this.trackPreview.album,
             this.artistPreview = this.artistArrayToString(this.trackPreview.artists),
             this.albumImg = this.albumPreview.images[0].url,
@@ -165,6 +168,7 @@ import { api, user } from "../spotify.js"
         newPost: function() {
           db.collection("posts")
           .add({
+            spotifyID: this.spotifyID,
             cover: this.albumImg,
             music: this.music,
             song: this.trackPreview.name,

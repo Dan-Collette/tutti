@@ -14,7 +14,6 @@ let user = {
     return (await this.getToken()) !== null;
   },
   setToken: async function (token) {
-    console.log("setting token", token);
     return await localforage.setItem("access_token", token);
   },
   setExpires: async function (expires) {
